@@ -26,3 +26,19 @@ Example request payload
     }
 }
 ```
+
+## Development
+
+### Environment Setup
+
+```powershell
+python -m venv .venv
+.venv/scripts/active
+python -m pip install -e .[development]
+```
+
+### Launching in Debug Mode
+
+```powershell
+python -m debugpy --listen 5678 --wait-for-client .\core\scraper\scraper.py
+```
