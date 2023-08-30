@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from typing import List
 
 
-def generate_weeks(years: List[int]):
+def generate_months(years: List[int]):
     # Generate weekly slices of data, with the start of the week as the first monday and
     # the end of the week as the next Monday
 
@@ -18,7 +18,7 @@ def generate_weeks(years: List[int]):
                     first_day + i * timedelta(7), "%Y-%m-%dT16:30:00+00:00"
                 ),
                 "end_day": datetime.strftime(
-                    first_day + (i + 1) * timedelta(7), "%Y-%m-%dT11:00:00+00:00"
+                    first_day + (i + 4) * timedelta(7), "%Y-%m-%dT11:00:00+00:00"
                 ),
             }
             for i in range(0, 52)

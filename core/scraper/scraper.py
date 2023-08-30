@@ -4,7 +4,7 @@ import requests
 
 from core.cities.extract_cities import extract_cities
 from core.cities.get_cities import get_cities
-from core.utils.utils import generate_payloads, generate_weeks, get_token
+from core.utils.utils import generate_payloads, generate_months, get_token
 
 
 def check_availability(url, payload, headers):
@@ -47,7 +47,7 @@ def check_availability(url, payload, headers):
 def main():
     url = "https://indiecampers.com/api/v3/availability"
 
-    weeks = generate_weeks([2024])
+    weeks = generate_months([2024])
 
     token = get_token()
 
