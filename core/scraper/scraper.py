@@ -1,10 +1,12 @@
 import json
+from datetime import datetime
+from pathlib import Path
 
 import requests
 
 from core.cities.extract_cities import extract_cities
 from core.cities.get_cities import get_cities
-from core.utils.utils import generate_payloads, generate_months, get_token
+from core.utils.utils import generate_months, generate_payloads, get_token
 
 
 def check_availability(url, payload, headers):
@@ -18,6 +20,10 @@ def check_availability(url, payload, headers):
     )
 
     response = requests.post(url=url, json=payload, headers=headers)
+
+    if response.status_code != 200:
+        print(f"Issue with request, received status code {response.status_code} \n")
+        return []
 
     data = json.loads(response.content.decode("utf-8"))
 
@@ -47,7 +53,7 @@ def check_availability(url, payload, headers):
 def main():
     url = "https://indiecampers.com/api/v3/availability"
 
-    weeks = generate_months([2024])
+    weeks = generate_months([2023, 2024])
 
     token = get_token()
 
@@ -70,11 +76,18 @@ def main():
     options = []
 
     for payload in payloads:
-        options.append(check_availability(url, payload, headers))
+        new_options = check_availability(url, payload, headers)
+
+        for option in new_options:
+            options.append(option)
 
     json_object = json.dumps(options, indent=4)
 
-    with open("options.json", "w") as outfile:
+    filename = f"results_{datetime.strftime(datetime.today(), '%Y%m%dT%H%M%S')}.json"
+
+    results_folder_path = Path(".") / "results"
+
+    with open(results_folder_path / filename, "w") as outfile:
         outfile.write(json_object)
 
 

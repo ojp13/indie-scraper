@@ -22,6 +22,7 @@ def generate_months(years: List[int]):
                 ),
             }
             for i in range(0, 52)
+            if first_day + i * timedelta(7) >= datetime.today()
         ]
 
         weeks.append(weeks_in_year)
