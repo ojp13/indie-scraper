@@ -1,8 +1,10 @@
+import json
+
 import requests
 
 from core.cities.extract_cities import extract_cities
 from core.cities.get_cities import get_cities
-from core.utils.utils import generate_payloads, generate_weeks
+from core.utils.utils import generate_payloads, generate_weeks, get_token
 
 
 def check_availability(url, payload, headers):
@@ -17,9 +19,11 @@ def check_availability(url, payload, headers):
 
     response = requests.post(url=url, json=payload, headers=headers)
 
+    data = json.loads(response.content.decode("utf-8"))
+
     options = []
 
-    for option in response.json().get("data", {}).get("availability", []):
+    for option in data.get("data", {}).get("availability", []):
         if option["available"]:
             options.append(
                 {
@@ -43,17 +47,20 @@ def check_availability(url, payload, headers):
 def main():
     url = "https://indiecampers.com/api/v3/availability"
 
-    authorization = input("Please enter your bearer token: \n")
-
     weeks = generate_weeks([2024])
+
+    token = get_token()
 
     headers = {
         "Content-Type": "application/json",
         "Content-Length": "570",
         "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-GB,en-US;q=0.9,en;q=0.8",
+        "Accept-Encoding": "gzip, deflate, br",
         "Origin": "https://indiecampers.co.uk",
         "Referer": "https://indiecampers.co.uk/",
-        "Authorization": authorization,
+        "Authorization": token,
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
     }
 
     cities = extract_cities(get_cities())
