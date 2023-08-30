@@ -72,7 +72,10 @@ def main():
     for payload in payloads:
         options.append(check_availability(url, payload, headers))
 
-    print(options)
+    json_object = json.dumps(options, indent=4)
+
+    with open("options.json", "w") as outfile:
+        outfile.write(json_object)
 
 
 if __name__ == "__main__":
