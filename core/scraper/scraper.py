@@ -43,6 +43,8 @@ def check_availability(url, payload, headers):
 def main():
     url = "https://indiecampers.com/api/v3/availability"
 
+    authorization = input("Please enter your bearer token: \n")
+
     weeks = generate_weeks([2024])
 
     headers = {
@@ -51,7 +53,7 @@ def main():
         "Accept": "application/json, text/plain, */*",
         "Origin": "https://indiecampers.co.uk",
         "Referer": "https://indiecampers.co.uk/",
-        "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwbGF0Zm9ybSIsImF1ZCI6InBsYXRmb3JtIiwiZXhwIjoxNjk0NTE1NDU2LCJqdGkiOiJhNzk0NTU5YS1kZjgxLTRiZmUtODY1Ny0zMjYzZjQyMjc5ODMiLCJjbGllbnRfYWNjb3VudCI6eyJlbWFpbCI6InBlYWNlLm9zY2FyQGdtYWlsLmNvbSIsIm5hbWUiOiJPc2NhciBQZWFjZSIsImFsbG93X3Bhc3N3b3JkX2NoYW5nZSI6ZmFsc2UsImNvbmZpcm1lZF9hdCI6IjIwMjMtMDEtMjMgMjE6MjA6NTQgKzAwMDAiLCJjcmVhdGVkX2F0IjoiMjAyMy0wMS0yMyAyMToyMDo1NCArMDAwMCIsInNjb3BlIjpbInVzZXIiXX19.MTzHgZLTPgTCJpToEw8iqnfS7Y4Wq4nLGIb2mOCe6oY",
+        "Authorization": authorization,
     }
 
     cities = extract_cities(get_cities())
