@@ -8,7 +8,7 @@ import plotly.express as px
 def analyse_options(options):
     df = pd.DataFrame.from_dict(options)
 
-    df.set_index(["start_date", "start_city", "van"], inplace=True)
+    # df.set_index(["start_date", "start_city", "van"], inplace=True)
 
     df.drop(columns=["end_date", "end_city"], inplace=True)
 
@@ -16,7 +16,7 @@ def analyse_options(options):
         df,
         x="start_date",
         y="total_price",
-        color="start_city",
+        color="van",
         hover_data=["van", "start_city", "total_price"],
     )
 
@@ -26,7 +26,7 @@ def analyse_options(options):
 
 
 if __name__ == "__main__":
-    file_name = "results_20230830T150422.json"
+    file_name = "results_20231014T091544.json"
     path = Path(".") / "results" / file_name
 
     with open(path, "r") as options_file:
