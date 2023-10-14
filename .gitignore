@@ -4,4 +4,4 @@
 token.txt
 
 *.cpython
-*.py[c]
+*.pyc
